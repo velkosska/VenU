@@ -7,6 +7,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RoleSelectionScreen from "./screens/RoleSelectionScreen";
 import EventDetailsScreen from "./screens/EventDetailsScreen";
 import ExploreSearchScreen from "./screens/ExploreSearchScreen";
+import ServiceDescriptionScreen from "./screens/ServiceDescriptionScreen"; 
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,9 @@ export default function App() {
         <Stack.Screen name="RoleSelection" component={RoleSelectionScreen} />
         <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
         <Stack.Screen name="ExploreSearch" component={ExploreSearchScreen} />
+        <Stack.Screen name="ServiceDescription" component={ServiceDescriptionScreen} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+

@@ -1,9 +1,8 @@
 // screens/EventDetailsScreen.js
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import CalendarPicker from "react-native-calendar-picker";
 import Slider from "@react-native-community/slider";
-
 
 const colors = {
   background: "#1E0B32", // Dark Purple
@@ -16,28 +15,20 @@ const colors = {
 
 const EventDetailsScreen = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
   const [region, setRegion] = useState("Madrid");
   const [guests, setGuests] = useState(250);
 
   return (
     <View style={{ flex: 1, padding: 20, backgroundColor: colors.background, justifyContent: "center" }}>
       <Text style={{ fontSize: 24, fontWeight: "bold", color: colors.text, marginBottom: 15, textAlign: 'center' }}>Select your Date</Text>
-      <TouchableOpacity onPress={() => setShowPicker(true)} style={{ padding: 12, backgroundColor: colors.inputBackground, borderWidth: 1, borderColor: colors.border, borderRadius: 8, marginBottom: 15, alignItems: 'center' }}>
-        <Text style={{ color: colors.text, fontSize: 18 }}>{date.toDateString()}</Text>
-      </TouchableOpacity>
-      {showPicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="default"
-          onChange={(event, selectedDate) => {
-            setShowPicker(false);
-            if (selectedDate) setDate(selectedDate);
-          }}
-        />
-      )}
-
+      
+      <CalendarPicker
+        onDateChange={(selectedDate) => setDate(selectedDate)}
+        selectedDayColor={colors.button}
+        selectedDayTextColor={colors.buttonText}
+        textStyle={{ color: colors.text }}
+      />
+      
       <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text, marginBottom: 10, textAlign: 'center' }}>Region</Text>
       <TextInput
         placeholder="Enter region"
