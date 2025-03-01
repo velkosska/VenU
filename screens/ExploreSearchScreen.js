@@ -14,8 +14,8 @@ const colors = {
 
 const categories = [
   { id: "1", name: "Venues", services: [
-    { id: "1a", name: "Grand Royal Ballroom", price: "€2500 per day", description: "A luxurious ballroom for grand events.", image: require("../assets/venue1.jpg") },
-    { id: "1b", name: "Prestige Banquet Hall", price: "€2000 per day", description: "Elegant venue perfect for banquets and receptions.", image: require("../assets/venue2.jpg") },
+    { id: "1a", name: "Grand Royal Ballroom", price: "€2500", description: "A luxurious ballroom for grand events.", image: require("../assets/venue1.jpg") },
+    { id: "1b", name: "Prestige Banquet Hall", price: "€2000", description: "Elegant venue perfect for banquets and receptions.", image: require("../assets/venue2.jpg") },
   ]},
   { id: "2", name: "Catering Services", services: [
     { id: "2a", name: "Gourmet Catering Co.", price: "€1500", description: "Premium catering service with diverse menu options.", image: require("../assets/catering1.jpg") },

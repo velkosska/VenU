@@ -54,7 +54,7 @@ const EventDetailsScreen = ({ navigation }) => {
       
       <TouchableOpacity 
         style={{ backgroundColor: colors.button, padding: 15, borderRadius: 8, alignItems: "center" }}
-        onPress={() => navigation.navigate("ExploreSearch")}
+        onPress={() => navigation.navigate("HomeScreen")}
       >
         <Text style={{ color: colors.buttonText, fontSize: 18, fontWeight: "bold" }}>Get Started!</Text>
       </TouchableOpacity>
