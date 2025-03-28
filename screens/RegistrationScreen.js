@@ -1,33 +1,36 @@
-// screens/LoginScreen.js
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+// screens/RegistrationScreen.js
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const colors = {
-  background: "#1E0B32", // Dark Purple
-  inputBackground: "#3C1C64", // Slightly Lighter Purple
-  button: "#B12A90", // Magenta
-  buttonText: "#FFFFFF", // White
-  text: "#D0CDE1", // Light Grayish Purple
-  placeholder: "#9B8CAD" // Muted Purple
+  background: "#1E0B32",         // Dark Purple
+  inputBackground: "#3C1C64",      // Slightly Lighter Purple
+  button: "#B12A90",             // Magenta
+  buttonText: "#FFFFFF",         // White
+  text: "#D0CDE1",              // Light Grayish Purple
+  placeholder: "#9B8CAD",       // Muted Purple
 };
 
-const LoginScreen = ({ navigation }) => {
+const RegistrationScreen = ({ navigation }) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [secureEntry, setSecureEntry] = useState(true);
+  const [secureEntryConfirm, setSecureEntryConfirm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const validateEmail = (email) => {
-    // Basic email regex for demonstration purposes
+    // Simple email regex for demo purposes
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     setErrorMessage("");
-    if (!email || !password) {
+    if (!name || !email || !password || !confirmPassword) {
       setErrorMessage("Please fill in all fields.");
       return;
     }
@@ -35,24 +38,35 @@ const LoginScreen = ({ navigation }) => {
       setErrorMessage("Please enter a valid email address.");
       return;
     }
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
 
-    // Simulate a login process; replace with your authentication API call
+    // Simulate a registration process; replace with your registration API call
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate("RoleSelection");
+      Alert.alert("Success", "Registration successful!", [
+        { text: "OK", onPress: () => navigation.navigate("Login") }
+      ]);
     }, 1500);
-  };
-
-  const handleRegister = () => {
-    navigation.navigate("Registration");
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to VenU</Text>
+      <Text style={styles.title}>Register</Text>
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
-      <TextInput 
+      <TextInput
+        placeholder="Name"
+        placeholderTextColor={colors.placeholder}
+        value={name}
+        onChangeText={setName}
+        style={styles.input}
+        accessible
+        accessibilityLabel="Name input"
+      />
+      <TextInput
         placeholder="Email"
         placeholderTextColor={colors.placeholder}
         value={email}
@@ -64,7 +78,7 @@ const LoginScreen = ({ navigation }) => {
         accessibilityLabel="Email input"
       />
       <View style={styles.passwordContainer}>
-        <TextInput 
+        <TextInput
           placeholder="Password"
           placeholderTextColor={colors.placeholder}
           value={password}
@@ -78,25 +92,30 @@ const LoginScreen = ({ navigation }) => {
           <Ionicons name={secureEntry ? "eye-off" : "eye"} size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={handleLogin}
-        accessible
-        accessibilityLabel="Login button"
-      >
+      <View style={styles.passwordContainer}>
+        <TextInput
+          placeholder="Confirm Password"
+          placeholderTextColor={colors.placeholder}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry={secureEntryConfirm}
+          style={[styles.input, { flex: 1, marginBottom: 0 }]}
+          accessible
+          accessibilityLabel="Confirm Password input"
+        />
+        <TouchableOpacity onPress={() => setSecureEntryConfirm(!secureEntryConfirm)} accessible accessibilityLabel="Toggle confirm password visibility">
+          <Ionicons name={secureEntryConfirm ? "eye-off" : "eye"} size={24} color={colors.text} />
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={handleRegister} accessible accessibilityLabel="Register button">
         {loading ? (
           <ActivityIndicator color={colors.buttonText} />
         ) : (
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Register</Text>
         )}
       </TouchableOpacity>
-      <TouchableOpacity 
-        style={styles.registerLink}
-        onPress={handleRegister}
-        accessible
-        accessibilityLabel="Register link"
-      >
-        <Text style={styles.registerText}>Not a user? Register</Text>
+      <TouchableOpacity style={styles.loginLink} onPress={() => navigation.navigate("Login")} accessible accessibilityLabel="Login link">
+        <Text style={styles.loginText}>Already a user? Login</Text>
       </TouchableOpacity>
     </View>
   );
@@ -150,14 +169,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 16,
   },
-  registerLink: {
+  loginLink: {
     marginTop: 20,
   },
-  registerText: {
-    color: colors.button, // Use the same pink color for consistency
+  loginText: {
+    color: colors.button, // Use pink color for consistency
     fontSize: 16,
     textDecorationLine: "underline",
   },
 });
 
-export default LoginScreen;
+export default RegistrationScreen;
